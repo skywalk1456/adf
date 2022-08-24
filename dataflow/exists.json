@@ -6,14 +6,14 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DS_sink_azuresql_emp_table",
+						"referenceName": "SqlServerTable2",
 						"type": "DatasetReference"
 					},
 					"name": "empdata"
 				},
 				{
 					"dataset": {
-						"referenceName": "SqlServerTable2",
+						"referenceName": "DS_sink_azuresql_emp_table",
 						"type": "DatasetReference"
 					},
 					"name": "childemp"
