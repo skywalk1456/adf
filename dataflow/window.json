@@ -44,7 +44,7 @@
 				"     format: 'table') ~> source1",
 				"source1 window(over(deptno),",
 				"     desc(sal, true),",
-				"     deptwisehighestsal = Rank()) ~> window1",
+				"     deptwisehighestsal = rank()) ~> window1",
 				"window1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
