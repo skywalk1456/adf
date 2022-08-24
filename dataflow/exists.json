@@ -31,6 +31,9 @@
 			"transformations": [
 				{
 					"name": "exists1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -65,9 +68,10 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table',",
 				"     partitionBy('hash', 1)) ~> childemp",
-				"empdata, childemp exists(empdata@empno == childemp@empno,",
+				"filter1, childemp exists(empdata@empno == childemp@empno,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> exists1",
+				"empdata filter(equals(deptno,10)) ~> filter1",
 				"exists1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
