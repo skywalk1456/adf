@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "conditionsplit",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -10,17 +10,29 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
 				},
 				{
 					"dataset": {
-						"referenceName": "SqlServerTable1",
+						"referenceName": "DelimitedText1",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "sink2"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "split1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          empno as integer,",
@@ -37,10 +49,19 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source(allowSchemaDrift: true,",
+				"source1 split(equals(deptno,10),",
+				"     disjoint: false) ~> split1@(matched, unmatched)",
+				"split1@matched sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source2"
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     partitionBy('hash', 1)) ~> sink1",
+				"split1@unmatched sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2"
 			]
 		}
 	}
