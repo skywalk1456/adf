@@ -43,6 +43,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
 				"source1 window(over(deptno),",
+				"     asc(sal, true),",
 				"     sal = denseRank()) ~> window1",
 				"window1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
