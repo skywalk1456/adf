@@ -1,0 +1,78 @@
+{
+	"name": "exists",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_sink_azuresql_emp_table",
+						"type": "DatasetReference"
+					},
+					"name": "empdata"
+				},
+				{
+					"dataset": {
+						"referenceName": "SqlServerTable2",
+						"type": "DatasetReference"
+					},
+					"name": "childemp"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "exists1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          empno as integer,",
+				"          ename as string,",
+				"          job as string,",
+				"          mgr as integer,",
+				"          hiredate as date,",
+				"          sal as integer,",
+				"          comm as integer,",
+				"          deptno as integer,",
+				"          genderid as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> empdata",
+				"source(output(",
+				"          empno as integer,",
+				"          ename as string,",
+				"          job as string,",
+				"          mgr as integer,",
+				"          hiredate as date,",
+				"          sal as integer,",
+				"          comm as integer,",
+				"          deptno as integer,",
+				"          genderid as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table',",
+				"     partitionBy('hash', 1)) ~> childemp",
+				"empdata, childemp exists(empdata@ename == childemp@empno,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
+				"exists1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
