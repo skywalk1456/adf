@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "aggrigate_branch",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -9,10 +9,25 @@
 						"referenceName": "DS_sink_azuresql_emp_table",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "empsource"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SqlServerTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
 			"transformations": [
 				{
 					"name": "deptwisesal"
@@ -33,9 +48,22 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
-				"source1 aggregate(groupBy(deptno),",
-				"     {deptwise-sal} = sum(sal)) ~> deptwisesal"
+				"     format: 'table') ~> empsource",
+				"empsource aggregate(groupBy(deptno),",
+				"     {deptwise-sal} = sum(sal)) ~> deptwisesal",
+				"deptwisesal sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"empsource sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}
