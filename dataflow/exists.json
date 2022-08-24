@@ -65,7 +65,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table',",
 				"     partitionBy('hash', 1)) ~> childemp",
-				"empdata, childemp exists(empdata@ename == childemp@empno,",
+				"empdata, childemp exists(empdata@empno == childemp@empno,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> exists1",
 				"exists1 sink(allowSchemaDrift: true,",
