@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "exists",
+				"name": "exists_filter",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "exists",
+						"referenceName": "exists_filter",
 						"type": "DataFlowReference"
 					},
 					"compute": {

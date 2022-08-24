@@ -1,5 +1,5 @@
 {
-	"name": "exists",
+	"name": "exists_filter",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
