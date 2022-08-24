@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "madhu1456"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"LS_source_onprem_Sqlserver_connectionString": {
+			"value": ""
+		},
+		"LS_akv_primaryakv_properties_typeProperties_baseUrl": {
+			"value": "https://primaryakv1456.vault.azure.net/"
+		},
+		"LS_sink_azure_sqlserver_properties_typeProperties_connectionString_secretName": {
+			"value": "azureSqlconnection"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
