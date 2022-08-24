@@ -50,7 +50,11 @@
 				"type": "int",
 				"precision": 10
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dept"
+		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
 }
