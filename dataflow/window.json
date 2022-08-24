@@ -43,7 +43,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
 				"source1 window(desc(sal, true),",
-				"     sal = denseRank()) ~> window1",
+				"     deptwisehighestsal = denseRank()) ~> window1",
 				"window1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
