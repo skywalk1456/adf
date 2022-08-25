@@ -1,0 +1,6 @@
+{
+	"name": "copy_on_prem_file_to_blob_container",
+	"properties": {
+		"annotations": []
+	}
+}
